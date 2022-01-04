@@ -1,0 +1,42 @@
+Docker Threat Modeling
+Given Docker's system components and the STRIDE framework, identify five potential threats that may arise.
+
+1. Docker client authorization abuse
+   Elevation of Privilege: when a Dockerfile does not specify a user, it defaults to executing the container using the root user, affecting client authorization and the Dockerfile.
+
+2. Docker client compromise
+   Tampering: An attacker gets control of the Docker client. This could lead to tampering of the Dockerfile that’s used to build the image affecting Dockerfile.
+
+3. Docker host isolation tampering
+   Spoofing: This can occur when a sidecar container has intentional access to the primary container's namespace and may spoof the namespace used by the primary container, resulting in isolation tampering.
+   
+4. Docker insecure defaults
+   Information Disclosure: The Docker host file system may be misconfigured, exposing sensitive information and leading to insecure defaults.
+
+5. Docker image security
+   Repudiation: Malicious images may be committed without authorization by an attacker. This affects image security.
+   
+
+Kubernetes Threat Modeling
+Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
+
+1. Control Plane kube-apiserver
+   Spoofing: Calls to the API server could be spoofed by a malicious caller.
+
+2. Control Plane etcd
+   Tampering: The configuration of etcd may be tampered with by an attacker, modifying vital system-level configurations such as pod specs.
+
+3. Control Plane kube-scheduler
+   Denial of Service: excessive traffic to the API server can overwhelm the endpoint. kube-scheduler can incorrectly schedule the pod.
+
+4. Node runtime kubelet
+   Repudiation: Unauthorized changes can be made to kubelet.
+
+5. Node runtime kube-proxy
+   Information Disclosure: Kube-proxy can expose sensitive information.
+
+Docker-bench Run Results and Analysis
+From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
+1. [FAIL] 2.7 Ensure TLS authentication for Docker daemon is configured (Automated)
+2. [FAIL] 2.14 Ensure containers are restricted from acquiring new privileges (Automated)
+3. [FAIL] 5.25 Ensure that the container is restricted from acquiring additional privileges (Automated)
