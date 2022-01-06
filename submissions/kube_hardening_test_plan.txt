@@ -1,0 +1,15 @@
+To ensure that we don't make changes that can negatively affect the system in the production environment, we will test the change to our system in a non-production system
+that mimics production verbatim.
+
+Once the changes are applied, we will constantly monitor metrics using monitoring and observability techniques like Prometheus and Grafana.
+That will help us see how the cluster reacts to the changes we brought.
+
+As this is a local demo, we won't be able to simulate directing traffic easily to a non-production cluster. In the real world, we can really do some 
+A/B testing by directing some traffic to a test environment via load balancer configuration.
+
+In the real world, cluster-bound incoming traffic is often split at the load balancer or if we are running a service mesh, we can do so via the mesh-like
+Istio or Envoy. As the cluster needs to be restarted, the change may take time to roll back.
+
+We must also ensure we can safely roll back to a previous working version our cluster in case our change breaks the cluster. For this, every time we're
+going to edit the cluster.yaml file, we're going to make sure it's version controlled with Git so the change can be rolled back when a problem arises.
+However, as this requires a reboot, we should be very careful with testing the change.

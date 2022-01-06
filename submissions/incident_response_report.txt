@@ -1,0 +1,24 @@
+1. Incident commander name: Joel Mbiye
+
+2. Executive Summary of what happened:
+Three pods running three different crypto miners were launched.
+The payload was Monero crypto-mining containers, specifically moneropool, minergate and cryptonight.
+
+3. Summary of what was affected:
+The attacker was able to get control of the cluster and run these containers on the cluster.
+As we all know, attackers are after compute resources to abuse for crypto-mining.
+
+4. Summmry of the impact:
+The attacker managed to run crypto miners on our system, which is undesirable. Usually, crypto-mining consumes a lot of CPU. 
+On the Grafana dashboard, we can notice that there has been a significant spike in CPU utilization due to crypto miners being started.
+
+5. Summary of the remediation steps:
+To remediate, the administrator can run the following command to evict the pods: kubectl --kubeconfig kube_config_cluster.yml delete pod <pod_name> --grace-period=0 --force
+We can check back on the Grafana dashboard to notice the decrease in CPU utilization.
+
+6. Summary of lessons learned:
+We should review access to the Kubernetes API server from administrative terminals and the Grafana dashboards. 
+Admission controllers can also be configured to disallow unknown images to be used to create containers.
+
+
+
